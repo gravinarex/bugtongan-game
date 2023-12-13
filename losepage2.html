@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oops! You Lost</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f8d7da;
+            margin: 0;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #721c24;
+        }
+
+        p {
+            color: #721c24;
+        }
+
+        .sad-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            transition: margin-top 0.3s ease-in-out;
+        }
+
+        .sad-image:hover {
+            margin-top: 15px; /* Adjust as needed */
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .retry-button, .quit-button, .menu-button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .retry-button {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .quit-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .menu-button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .retry-button:hover, .quit-button:hover, .menu-button:hover {
+            opacity: 0.8;
+            transform: scale(1.05); /* Scale the button slightly on hover */
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+        <h1>Oops! You Lost</h1>
+        <p>Don't worry, better luck next time!</p>
+        <img class="sad-image" src="naku.gif" alt="Hay naku!">
+        
+        <div class="button-container">
+            <button class="retry-button" onclick="retryGame()">Retry</button>
+            <button class="quit-button" onclick="quitGame()">Quit</button>
+            <button class="menu-button" onclick="window.location.href='home.html'">Back to Menu</button>
+        </div>
+    </section>
+
+    <script>
+        function retryGame() {
+            // Add any retry logic here
+            alert("Retrying the game!");
+            // You can redirect to the same page or reload the current page
+            window.location.href = 'page3prutasatgulay.html'
+        }
+
+        // Your existing quitGame function remains unchanged
+        function quitGame() {
+            alert("Are you sure you want to quit?");
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

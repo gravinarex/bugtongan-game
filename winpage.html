@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Congratulations! You Win!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #e0f7fa;
+            margin: 0;
+            padding: 20px;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #009688;
+        }
+
+        p {
+            color: #424242;
+        }
+
+        .celebration-image {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            transition: margin-top 0.3s ease-in-out;
+        }
+
+        .celebration-image:hover {
+            margin-top: 15px; /* Adjust as needed */
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .menu-button, .quit-button {
+            padding: 10px 20px;
+            margin: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .menu-button {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .quit-button {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .menu-button:hover, .quit-button:hover {
+            opacity: 0.8;
+            transform: scale(1.05); /* Scale the button slightly on hover */
+            background-color: #45a049; /* Adjust the color on hover */
+        }
+    </style>
+</head>
+<body>
+    <section class="container">
+        <h1>Congratulations! You Win!</h1>
+        <p>Great job! You have successfully completed the challenge.</p>
+        <img class="celebration-image" src="panalo.gif" alt="YEY! panalo">
+        
+        <div class="button-container">
+            <button class="menu-button" onclick="window.location.href='home.html'">Back to Menu</button>
+            <br>
+            <button class="quit-button" onclick="quitGame()">Quit</button>
+        </div>
+    </section>
+
+    <script>
+        function quitGame() {
+            alert("Are you sure you want to quit?");
+            window.location.href = 'index.html'; // Replace 'quit.html' with the actual HTML file you want to link to
+        }
+    </script>
+</body>
+</html>

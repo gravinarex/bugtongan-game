@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BUGTONG - Home</title>
+        <style>
+        /* Base styling for the page */
+        body {
+            background-image: url('p1.jpg');
+                            background-size: cover;
+                background-repeat: repeat;
+                background-attachment: scroll;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        /* Container holding the content */
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+            height: 350px;
+        }
+
+        /* Buttons' base styling */
+        #playButton,
+        #instructionsButton {
+            font-size: 18px;
+            text-align: center;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-right: 20px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        /* Styling for the Play button */
+        #playButton {
+            width: 100px;
+            height: 100px;
+            background-color: #3C91E6;
+            color: white;
+            font-size: 18px;
+            line-height: 100px;
+            text-align: center;
+            border-radius: 50%;
+        }
+
+        /* Styling for the Instructions button */
+        #instructionsButton {
+            width: 150px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        /* Style for the instructions modal */
+        #instructionsModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+
+        /* Style for the content inside the instructions modal */
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            text-align: left;
+            max-width: 80%;
+            width: 100%;
+            margin: auto;
+        }
+
+        /* Style for unordered list */
+        .instructions-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .instructions-list li {
+            margin-bottom: 10px;
+        }
+
+        .instructions-list li::before {
+            content: none; /* Use 'none' instead of an empty string */
+        }
+
+        /* Style for the close button inside the modal */
+        .close-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to Bugtong-bugtong Game</h1>
+        <p>Test your wit and have fun solving Bugtongs!</p>
+        <button id="playButton" onclick="redirectToGame()">PLAY NOW</button>
+        <br>
+        <button id="instructionsButton" onclick="openInstructionsModal()">INSTRUCTIONS</button>
+
+        <!-- Instructions Modal -->
+        <div id="instructionsModal" class="modal">
+            <div class="modal-content">
+                <h2>Instructions</h2>
+                 <p><strong>Bugtong-Bugtong Game Instructions</strong></p>
+                <p>Welcome to the Bugtong-Bugtong Game! Here's a quick guide on how to play:</p>
+                <ul class="instructions-list">
+                    <!-- Instructions -->
+                    <li><strong>Riddle Display:</strong>
+                        <ul>
+                            <li>The game will display a bugtong (riddle) in the "Riddle" section.</li>
+                            <li>The riddle will be revealed gradually through animation.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Answer Input:</strong>
+                        <ul>
+                            <li>Enter your answer in the input box below the riddle.</li>
+                            <li>Click on the "Check Answer" button to submit your answer.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Scoring:</strong>
+                        <ul>
+                            <li>Correct Answer: Earn 1 point.</li>
+                            <li>Incorrect Answer: Lose a remaining guess. You start with 3 guesses.</li>
+                            <li>Achieve a score of 10 to win the game.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Hints:</strong>
+                        <ul>
+                            <li>Click on the "Hint" button to receive a hint about the answer.</li>
+                            <li>Each hint costs 2 points.</li>
+                            <li>You have a maximum of 3 hints.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Get Answer (New Feature):</strong>
+                        <ul>
+                            <li>Click on the "Get Answer" button to reveal the correct answer.</li>
+                            <li>Each use of the "Get Answer" feature costs 3 points.</li>
+                            <li>You have a maximum of 1 usage.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Remaining Guesses and Hints:</strong>
+                        <ul>
+                            <li>The number of remaining guesses and hints is displayed at the bottom.</li>
+                            <li>Use them wisely to maximize your score.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Time Limit:</strong>
+                        <ul>
+                            <li>You have 30 seconds to answer each bugtong.</li>
+                            <li>The timer is displayed at the bottom.</li>
+                            <li>If time runs out, you lose the round.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Sidebar:</strong>
+                        <ul>
+                            <li>Click on the ☰ button to toggle the sidebar.</li>
+                            <li>You can access options like "Continue," "Menu," "Instruction," and "Quit."</li>
+                        </ul>
+                    </li>
+                    <li><strong>Restart Game:</strong>
+                        <ul>
+                            <li>Click on the "Restart Game" button to start a new game.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Winning:</strong>
+                        <ul>
+                            <li>Reach a score of 10 to win the game.</li>
+                            <li>If you lose all your guesses or time runs out, you lose the game.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Have Fun:</strong>
+                        <ul>
+                            <li>Enjoy the Bugtong-Bugtong Game! Test your wit and have a great time playing.</li>
+                            <li>Remember, the faster and more accurate you are, the higher your score.</li>
+                            <li>Good luck and have fun!</li>
+                        </ul>
+                    </li>
+                </ul>
+                <button class="close-button" onclick="closeInstructionsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Function to handle the play button click and redirect to another HTML page
+        function redirectToGame() {
+            // Change the URL to the desired HTML page
+            window.location.href = 'tryhowtoplay.html';
+        }
+
+        // Function to open the instructions modal
+        function openInstructionsModal() {
+            document.getElementById('instructionsModal').style.display = 'block';
+        }
+
+        // Function to close the instructions modal
+        function closeInstructionsModal() {
+            document.getElementById('instructionsModal').style.display = 'none';
+        }
+
+        // Ensure the modal is initially hidden
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('instructionsModal').style.display = 'none';
+        });
+    </script>
+</body>
+
+</html>

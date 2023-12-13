@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bugtong-Bugtong HAYOP</title>
+
+    <style>
+               /* External CSS file */
+        body {
+            background-image: url('p1.jpg');
+                background-size: cover;
+                background-repeat: repeat;
+                background-attachment: scroll;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            display: flex;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            height: 100vh;
+            position: fixed;
+            left: -250px;
+            transition: left 0.3s;
+            padding-top: 20px;
+        }
+
+        .sidebar a {
+            padding: 15px;
+            text-decoration: none;
+            font-size: 20px;
+            color: white;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        .toggle-btn {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            position: fixed;
+            left: 20px;
+            top: 20px;
+            z-index: 2;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .riddle-container {
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            background-color: #f0f0f0;
+        }
+
+        .riddle-text {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            white-space: pre-line; /* Preserve line breaks */
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 18px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .hint-text {
+            font-size: 18px;
+            margin-top: 10px;
+            color: #777;
+            text-align: center;
+        }
+
+        .result-text {
+            font-size: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .info-text {
+            font-size: 16px;
+            color: #555;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        /* Responsive design using media queries */
+        @media screen and (max-width: 600px) {
+            .container {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .sidebar {
+                width: 100%;
+                left: 0;
+            }
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* Modal styles */
+        .confirmation-modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .confirmation-modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            text-align: center;
+        }
+
+        .confirmation-modal button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin: 10px;
+        }
+
+        .confirmation-modal button.cancel {
+            background-color: #aaa;
+        }
+    </style>
+</head>
+
+<body>
+    <body>
+    <div class="sidebar" id="sidebar">
+        <br>
+        <br>
+        <br>
+        <br>
+        <a href="home.html" onclick="toggleSidebar('Menu')">Menu</a>
+        <a href="instructionpage.html" onclick="toggleSidebar('Instruction')">Instruction</a>
+        <a href="index.html" onclick="toggleSidebar('Quit')">Quit</a>
+    </div>
+    <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+    <div class="container">
+        <h1>Bugtong-Bugtong Game<br>TOPIC: HAYOP</h1>
+        <div class="riddle-container">
+            <p class="riddle-text" id="riddle"></p>
+            <div class="input-container">
+                <input type="text" id="answerInput" placeholder="Your Answer">
+                <p class="hint-text" id="hintText"></p>
+            </div>
+            <div class="button-container">
+                <button id="checkButton">Check Answer</button>
+                <button id="hintButton">Hint</button>
+                <button id="getAnswerButton">Get Answer</button>
+            </div>
+            <p class="result-text" id="result"></p>
+            <p class="info-text">Remaining Guess: <span id="remaining-guess">3</span> | Remaining Hints: <span
+        id="remaining-hint">3</span> | Score: <span id="score">0</span> | Time: <span id="timer">30</span>
+</p>
+
+
+
+            </p>
+
+            <button id="restartButton">Restart Game</button>
+        </div>
+    </div>
+
+ <!-- Confirmation Modal for Hint -->
+<div id="hintConfirmationModal" class="confirmation-modal">
+    <div class="confirmation-modal-content">
+        <div>
+            <p>Are you sure you want to use the hint?</p>
+            <button onclick="confirmHint()">Yes</button>
+            <button class="cancel" onclick="cancelHint()">No</button>
+            <div>
+                <h2>How the Hint Works</h2>
+                <p>When you click the "Hint" button, you'll receive a clue about the answer. However, be cautious, as using hints will deduct 2 points from your score.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation Modal for Get Answer -->
+<div id="getAnswerConfirmationModal" class="confirmation-modal">
+    <div class="confirmation-modal-content">
+        <div>
+              <h2>You can use this one time in a game.</h2>
+              <p>Are you sure you want to use the Get Answer?</p>
+
+            <button onclick="confirmGetAnswer()">Yes</button>
+            <button class="cancel" onclick="cancelGetAnswer()">No</button>
+            <div>
+                <h2>How the Get Answer Works</h2>
+                <p>If you're stuck and can't solve the riddle, you can click the "Get Answer" button. It will reveal the correct answer, but keep in mind that using this option will result in a significant deduction of 3 points from your score.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script>
+                // Function to toggle the sidebar and handle sidebar links
+        function toggleSidebar(page) {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarWidth = getComputedStyle(sidebar).width;
+
+            if (sidebar.style.left === '0px' || sidebar.style.left === '') {
+                sidebar.style.left = `-${sidebarWidth}`;
+            } else {
+                sidebar.style.left = '0';
+            }
+
+            // Handle click on sidebar links
+            
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const riddles = [
+{ "question": "Ang buntot ay makinang, sa gabi'y kumikislap.", "answer": "Alitaptap" },
+{ "question": "Lumilipad ng mababa, kulay itim, hindi ibon.", "answer": "Langgam" },
+{ "question": "Nagtatago sa dayap, kumakain ng mabigat.", "answer": "Daga" },
+{ "question": "Malambot na laman, mabilis magtago, sa puno nagmumula, sagana sa kahoy.", "answer": "Palaka" },
+{ "question": "Mataas ang leeg, mabilis magtakbo, tahanan ay sa damuhan.", "answer": "Kabayo" },
+{ "question": "Maliit at bilugan, sa gubat nagtatago, may mahabang buntot.", "answer": "Uwak" },
+{ "question": "May sungay ngunit hindi tandang, nagtatago sa dagat.", "answer": "Pating" },
+{ "question": "Malakas ang ulo, may sungay ngunit hindi baka.", "answer": "Kalabaw" },
+{ "question": "Sa ilalim ng lupa ito'y naghuhukay, nagtatanim ng pagkain.", "answer": "Baboy" },
+{ "question": "May makintab na balahibo, nagtatago sa tubig, mabilis maglangoy.", "answer": "Isda" },
+{ "question": "Malakas ang katawan, matibay ang sungay, hari sa kagubatan.", "answer": "Leon" },
+{ "question": "Kakaibang anyo, may mga paa ngunit hindi naglalakad, nangingisda ng mabigat.", "answer": "Pusa" },
+{ "question": "Sa ilalim ng lupa ito'y gumagalaw, may pangil ngunit hindi aso.", "answer": "Ahas" },
+{ "question": "Matangkad na hayop, may mahabang leeg, kumakain ng mga dahon.", "answer": "Giraffe" },
+{ "question": "Makapal na balahibo, maingay sa umaga, nagtatago sa sanga ng kahoy.", "answer": "Maya" },
+{ "question": "Malaki ang katawan, may mahabang buntot, mabilis tumakbo.", "answer": "Tigre" },
+{ "question": "Sa langit naglalakbay, may mga pako sa pakpak, hindi ibon.", "answer": "Paru-paro" },
+{ "question": "Makinis at madulas, maingay sa gabi, mabilis mag-akyat puno.", "answer": "Kuwago" },
+{ "question": "Kulay berde, maraming paa, kumakain ng mga halaman.", "answer": "Butiki" },
+{ "question": "Maliit na hayop, nagbibigay kasiyahan, may bilog na ilong.", "answer": "Clownfish" }
+,
+            ];
+
+            const remainingGuessElement = document.getElementById('remaining-guess');
+            const answerInputElement = document.getElementById('answerInput');
+            const resultElement = document.getElementById('result');
+            const scoreElement = document.getElementById('score');
+            const checkButton = document.getElementById('checkButton');
+            const hintButton = document.getElementById('hintButton');
+            const getAnswerButton = document.getElementById('getAnswerButton');
+            const remainingHintElement = document.getElementById('remaining-hint');
+            const restartButton = document.getElementById('restartButton');
+            const riddleElement = document.getElementById('riddle');
+            const hintTextElement = document.getElementById('hintText');
+            const timerElement = document.getElementById('timer');
+            const sidebar = document.getElementById('sidebar');
+
+            let remainingGuess = 3;
+            let currentRiddleIndex;
+            let score = 0;
+            let remainingHint = 3;
+            let remainingGetAnswer = 1;
+            let timer;
+
+            // Function to confirm the Get Answer action
+function confirmGetAnswer() {
+    closeGetAnswerConfirmationModal();
+    openGetAnswerModal();
+    getAnswer();
+
+    // Update the "Get answer" span value to 0
+    document.getElementById('remaining-get-answer').textContent = 0;
+}
+
+
+            function displayRiddleWithAnimation() {
+                const riddleText = riddles[currentRiddleIndex].question;
+                animateText(riddleText);
+            }
+
+            function animateText(text) {
+                let index = 0;
+                const interval = setInterval(function () {
+                    riddleElement.textContent = text.slice(0, index);
+                    index++;
+                    if (index > text.length) {
+                        clearInterval(interval);
+                        startTimer();
+                    }
+                }, 50);
+            }
+
+            function startTimer() {
+                timer = setInterval(function () {
+                    timerElement.textContent = timerElement.textContent - 1;
+
+                    if (timerElement.textContent < 0) {
+                        alert('Time\'s up! You lost.');
+                        window.location.href = 'losepage3.html';
+                        resetGame();
+                    }
+                }, 1000);
+            }
+
+function resetTimer() {
+    clearInterval(timer);
+    timerElement.textContent = 30; // Reset the timer to the initial value
+    startTimer(); // Start the timer again
+}
+
+
+            function checkAnswer() {
+    const userAnswer = answerInputElement.value.toLowerCase();
+    const correctAnswer = riddles[currentRiddleIndex].answer.toLowerCase();
+
+    if (userAnswer === correctAnswer) {
+        resultElement.textContent = `Correct! You earned 1 point.`;
+        score += 1;
+        scoreElement.textContent = score;
+
+        if (score === 10) {
+            // Navigate to winpage.html upon winning
+            window.location.href = 'winpage.html';
+            return; // Remove resetGame() to avoid executing after redirect
+        }
+
+        remainingGuess = 3;
+        remainingGuessElement.textContent = remainingGuess;
+        answerInputElement.value = '';
+        getNextRiddle();
+    } else {
+        resultElement.textContent = 'Incorrect. Try again.';
+        remainingGuess--;
+
+        if (remainingGuess === 0) {
+            // Navigate to losepage.html upon losing
+            window.location.href = 'losepage3.html';
+            return; // Remove resetGame() to avoid executing after redirect
+        }
+    }
+
+    remainingGuessElement.textContent = remainingGuess;
+    checkButton.disabled = false;
+    resetTimer(); // Reset the timer for the next riddle
+}
+
+
+function getHint() {
+    const answer = riddles[currentRiddleIndex].answer;
+
+    if (score <= 1) {
+        hintTextElement.textContent = `Not enough score. Earn more by answering correctly.`;
+        setTimeout(() => {
+            hintTextElement.textContent = '';
+        }, 2000); // Adjust the delay (in milliseconds) as needed
+        return;
+    }
+
+    if (remainingHint > 0) {
+        const firstLetter = answer.charAt(0).toUpperCase();
+        const numLetters = answer.length;
+        hintTextElement.textContent = `Nag sisimula sa letrang "${firstLetter}" at may ${numLetters} titik ang sagot.`;
+        remainingHint--;
+        remainingHintElement.textContent = remainingHint;
+
+        score -= 2;
+        scoreElement.textContent = score;
+
+        if (remainingHint === 0) {
+            hintButton.disabled = true;
+        }
+
+    } else {
+        hintTextElement.textContent = `Hint limit reached. No more hints available.`;
+    }
+}
+
+function getAnswer() {
+    const correctAnswer = riddles[currentRiddleIndex].answer;
+
+    if (score <= 2) {
+        hintTextElement.textContent = `Not enough score. Earn more by answering correctly.`;
+
+        // Hide the text content after a delay
+        setTimeout(() => {
+            hintTextElement.textContent = '';
+        }, 2000); // Adjust the delay (in milliseconds) as needed
+        return;
+    }
+
+    if (remainingGetAnswer > 0) {
+        answerInputElement.value = correctAnswer;
+        resultElement.textContent = `Here's the answer!`;
+        remainingGetAnswer--;
+        remainingHintElement.textContent = remainingGetAnswer;
+
+        score -= 3;
+        scoreElement.textContent = score;
+
+        getAnswerButton.disabled = true;
+    } else {
+        hintTextElement.textContent = `Get Answer limit reached. No more answers available.`;
+
+        
+    }
+}
+
+
+
+            function resetGame() {
+                checkButton.disabled = false;
+                hintButton.disabled = false;
+                getAnswerButton.disabled = false; // Enable the Get Answer button
+                remainingHint = 3;
+                remainingHintElement.textContent = remainingHint;
+                remainingGetAnswer = 1; // Reset the remaining Get Answer count
+                currentRiddleIndex = undefined;
+                remainingGuess = 3;
+                remainingGuessElement.textContent = remainingGuess;
+                score = 0;
+                resultElement.textContent = '';
+                scoreElement.textContent = score;
+                answerInputElement.value = '';
+                getNextRiddle();
+                resetTimer(); // Reset the timer when restarting the game
+            }
+
+            function getNextRiddle() {
+                riddleElement.textContent = '';
+                do {
+                    currentRiddleIndex = Math.floor(Math.random() * riddles.length);
+                } while (currentRiddleIndex === undefined || currentRiddleIndex === null);
+                displayRiddleWithAnimation();
+            }
+
+            // Initial setup
+            resetGame();
+
+            // Event listeners
+            checkButton.addEventListener('click', checkAnswer);
+            hintButton.addEventListener('click', getHint);
+            getAnswerButton.addEventListener('click', getAnswer);
+            restartButton.addEventListener('click', resetGame);
+        });
+
+        // Event listeners for the Hint and Get Answer buttons
+        hintButton.addEventListener('click', function () {
+            openHintConfirmationModal();
+        });
+
+        getAnswerButton.addEventListener('click', function () {
+            openGetAnswerConfirmationModal();
+        });
+
+        // Function to open the Hint confirmation modal
+        function openHintConfirmationModal() {
+            const hintConfirmationModal = document.getElementById('hintConfirmationModal');
+            hintConfirmationModal.style.display = 'block';
+        }
+
+        // Function to confirm the Hint action
+        function confirmHint() {
+            closeHintConfirmationModal();
+            openHintModal();
+            getHint();
+        }
+
+        // Function to cancel the Hint action
+        function cancelHint() {
+            closeHintConfirmationModal();
+        }
+
+        // Function to close the Hint confirmation modal
+        function closeHintConfirmationModal() {
+            const hintConfirmationModal = document.getElementById('hintConfirmationModal');
+            hintConfirmationModal.style.display = 'none';
+        }
+
+        // Function to open the Get Answer confirmation modal
+        function openGetAnswerConfirmationModal() {
+            const getAnswerConfirmationModal = document.getElementById('getAnswerConfirmationModal');
+            getAnswerConfirmationModal.style.display = 'block';
+        }
+
+        // Function to confirm the Get Answer action
+        function confirmGetAnswer() {
+            closeGetAnswerConfirmationModal();
+            openGetAnswerModal();
+            getAnswer();
+        }
+
+        // Function to cancel the Get Answer action
+        function cancelGetAnswer() {
+            closeGetAnswerConfirmationModal();
+        }
+
+        // Function to close the Get Answer confirmation modal
+        function closeGetAnswerConfirmationModal() {
+            const getAnswerConfirmationModal = document.getElementById('getAnswerConfirmationModal');
+            getAnswerConfirmationModal.style.display = 'none';
+        }
+        function closeHintConfirmationModal() {
+    const hintConfirmationModal = document.getElementById('hintConfirmationModal');
+    hintConfirmationModal.style.display = 'none';
+}
+
+function closeGetAnswerConfirmationModal() {
+    const getAnswerConfirmationModal = document.getElementById('getAnswerConfirmationModal');
+    getAnswerConfirmationModal.style.display = 'none';
+}
+
+    </script>
+</body>
+
+</html>

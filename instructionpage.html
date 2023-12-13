@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bugtong - Bugtong Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1, h2, p {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, button {
+            padding: 8px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #feedbackMessage {
+            color: #4CAF50;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bugtong - Bugtong Game</h1>
+<br>
+<br>
+
+        <h2>Answer Input</h2>
+        <form id="bugtongForm">
+            <label for="answer">Enter your answer:</label>
+            <input type="text" id="answer" name="answer" required>
+            
+            <h2>Scoring</h2>
+            <p>Correct Answer: +1 point</p>
+            <p>Incorrect Answer: -1 remaining guess (You start with 3 guesses)</p>
+            <p>Achieve a score of 10 to win the game</p>
+
+            <h2>Hints</h2>
+            <p>Click on the "Hint" button to receive a hint about the answer.</p>
+            <p>Each hint costs 2 points.</p>
+            <p>You have a maximum of 3 hints.</p>
+            <button id="hint">Hint</button>
+
+            <h2>Get Answer</h2>
+            <p>Click on the "Get Answer" button to reveal the correct answer.</p>
+            <p>Each use of the "Get Answer" feature costs 3 points.</p>
+            <p>You have a maximum of 1 usage.</p>
+            <button id="get-answer">Get Answer</button>
+
+            <h2>Game Features</h2>
+            <p>Remaining Guesses and Hints: The number of remaining guesses and hints is displayed at the bottom.</p>
+            <p>Time Limit: You have 30 seconds to answer each bugtong. The timer is displayed at the bottom. If time runs out, you lose the round.</p>
+            <p>Sidebar: Click on the button to toggle the sidebar. You can access options like "Menu," "Instruction," and "Quit."</p>
+            <p>Restart Game: Click on the "Restart Game" button to start a new game.</p>
+            <p>Winning: Reach a score of 10 to win the game. If you lose all your guesses or time runs out, you lose the game.</p>
+            <p>Have Fun: Enjoy the Bugtong - Bugtong 
+                <br><p>If you understand the instruction, please check the box and click OK</p>
+            <label for="understandCheck">
+                    <input type="checkbox" id="understandCheck" name="understand"> I understand
+                </label>
+
+                <button type="button" id="closeInstructionBtn" disabled>CLOSE INSTRUCTION</button>
+                <p id="feedbackMessage"></p>
+        </form>
+    </div>
+
+    <script>
+        // Add JavaScript to enable/disable the button based on checkbox state
+        document.getElementById('understandCheck').addEventListener('change', function () {
+            document.getElementById('closeInstructionBtn').disabled = !this.checked;
+            document.getElementById('feedbackMessage').innerText = this.checked ? "You can now close the instruction." : "";
+        });
+
+        // Add JavaScript to handle button click
+        document.getElementById('closeInstructionBtn').addEventListener('click', function () {
+            // Check if the checkbox is checked
+            if (document.getElementById('understandCheck').checked) {
+                // If checked, navigate to page1home.html
+                window.location.href = 'home.html';
+            } else {
+                // Handle the case where the checkbox is not checked
+                // For now, let's just disable the button
+                this.disabled = true;
+            }
+        });
+    </script>
+</body>
+</html>

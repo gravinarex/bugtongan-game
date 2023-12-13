@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Play - Bugtong-Bugtong Game</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            background-image: url('p1.jpg');
+    background-size: cover;
+    background-repeat: repeat;
+    background-attachment: scroll;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .slide-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slide {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .slide img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .prev,
+        .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 0 10px;
+        }
+
+        .next {
+            right: 0;
+        }
+
+        .prev:hover,
+        .next:hover {
+            background-color: #45a049;
+        }
+
+        .dots {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 5px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .active {
+            background-color: #717171;
+        }
+
+        .instructions {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .slide-7-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .okay-button {
+            font-size: 18px;
+            cursor: pointer;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .okay-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>How to Play Bugtong-Bugtong Game</h1>
+        <div class="slide-container">
+            <p class="instructions" id="instructionText"></p>
+            <div class="slides">
+                <div class="slide"><img src="pic1.png" alt="Slide 1"></div>
+                <div class="slide"><img src="pic2.png" alt="Slide 2"></div>
+                <div class="slide"><img src="pic3.png" alt="Slide 3"></div>
+                <div class="slide"><img src="pic4.png" alt="Slide 4"></div>
+                <div class="slide"><img src="pic5.png" alt="Slide 5"></div>
+                <div class="slide"><img src="pic6.png" alt="Slide 6"></div>
+                <div class="slide" id="slide-7"> <!-- New slide -->
+                    <div class="slide-7-button">
+                        <button class="okay-button" onclick="navigateToAnotherPage()">Okay</button>
+                    </div>
+                </div>
+                <!-- Add more slides as needed -->
+            </div>
+
+            <button class="prev" onclick="changeSlide(-1)">❮</button>
+            <button class="next" onclick="changeSlide(1)">❯</button>
+        </div>
+
+        <div class="dots" id="dots-container"></div>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+
+        const paragraphs = [
+            "Slide 1. Provide details about the bugtongan menu of the game you can see here the categories choose one and play.",
+            "This is the instruction for Slide 2. Here's the main page of the game you can see in the page a question, check answer, hint, getanswer, and reset game.",
+            "Slide 3. You need 10 answers correctly so you will win.",
+            " Slide 4. Rules or features You can use Reset if the remaining guess runs out you Lose if the timer runs out you Lose.",
+            "Slide 5. Guidance for the players if you use Get answer your score will be deducted 3 points so use it wisely.",
+            "Slide 6. Tips for you to win use the hint wisely because you can use 3 hints in a game.",
+            "Slide 7. Now player click 'Okay' button to win the bugtong-bugtong game!"
+
+            // Add more instructions as needed
+        ];
+
+        function showSlides() {
+            const slides = document.querySelector('.slides');
+            const dotsContainer = document.getElementById('dots-container');
+            const instructionText = document.getElementById('instructionText');
+
+            slides.style.transform = `translateX(${-currentSlide * 100}%)`;
+            instructionText.textContent = paragraphs[currentSlide];
+
+            const numSlides = slides.children.length;
+
+            // Generate dots
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < numSlides; i++) {
+                const dot = document.createElement('span');
+                dot.classList.add('dot');
+                dot.onclick = () => changeSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+
+            // Highlight the current dot
+            const dots = dotsContainer.children;
+            dots[currentSlide].classList.add('active');
+        }
+
+        function changeSlide(n) {
+            const slides = document.querySelector('.slides');
+            const numSlides = slides.children.length;
+
+            currentSlide = (currentSlide + n + numSlides) % numSlides;
+            showSlides();
+        }
+
+        function navigateToAnotherPage() {
+            // You can replace 'anotherPage.html' with the actual HTML page you want to navigate to.
+            window.location.href = 'home.html';
+        }
+
+        showSlides();
+    </script>
+
+</body>
+
+</html>
